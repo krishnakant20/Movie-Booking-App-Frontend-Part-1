@@ -103,12 +103,11 @@ class Header extends Component {
                 sessionStorage.setItem("uuid", JSON.parse(this.responseText).id);
                 //sessionStorage.setItem("access-token", xhrLogin.getResponseHeader("access-token"));
 
-                if(xhrLogin.getResponseHeader("access-token") == null)
-                {
+                if (xhrLogin.getResponseHeader("access-token") == null) {
                     sessionStorage.setItem("access-token", JSON.parse(this.responseText)["access-token"]);
                 }
-                
-            
+
+
                 that.setState({
                     loggedIn: true
                 });
@@ -117,11 +116,15 @@ class Header extends Component {
             }
         });
 
+        // in given Database password was stored in plain text but to provide more security bcryptjs is used and password is stored in the hash format
+
+        // so while login create new user & password to implement login/logout function properly in frontend side
+
         xhrLogin.open("POST", this.props.baseUrl + "auth/login");
         xhrLogin.setRequestHeader("Authorization", "Basic " + window.btoa(this.state.username + ":" + this.state.loginPassword));
         xhrLogin.setRequestHeader("Content-Type", "application/json");
         xhrLogin.setRequestHeader("Cache-Control", "no-cache");
-       
+
         xhrLogin.send(dataLogin);
     }
 
@@ -196,8 +199,7 @@ class Header extends Component {
         let that = this;
         xhrSignout.addEventListener("readystatechange", function () {
             if (this.readyState === 4) {
-                if(JSON.parse(this.responseText).message == "Logged Out successfully.")
-                {
+                if (JSON.parse(this.responseText).message == "Logged Out successfully.") {
                     sessionStorage.removeItem("uuid");
                     sessionStorage.removeItem("access-token");
 
@@ -214,7 +216,7 @@ class Header extends Component {
         xhrSignout.send(dataSignout);
 
 
-        
+
     }
 
     render() {
@@ -344,7 +346,7 @@ class Header extends Component {
                                 <FormControl>
                                     <span className="successText">
                                         Registration Successful. Please Login!
-                                      </span>
+                                    </span>
                                 </FormControl>
                             }
                             <br /><br />
