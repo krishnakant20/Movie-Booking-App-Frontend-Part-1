@@ -54,7 +54,7 @@ class Details extends Component {
             if (this.readyState === 4) {
                 debugger;
                 that.setState({
-                    movie: JSON.parse(this.responseText)[0]
+                    movie: JSON.parse(this.response)[0]
                 });
             }
         });

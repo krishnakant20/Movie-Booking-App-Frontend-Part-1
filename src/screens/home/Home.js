@@ -66,6 +66,7 @@ class Home extends Component {
     }
 
     componentWillMount() {
+        console.log("compnent will mount called");
         // Get upcoming movies
         let data = null;
         let xhr = new XMLHttpRequest();
@@ -75,14 +76,17 @@ class Home extends Component {
             if (this.readyState === 4) {
                 debugger;
                 that.setState({
-                    upcomingMovies: JSON.parse(this.responseText).movies
+                    upcomingMovies: JSON.parse(this.response).movies
                 });
             }
         });
 
+       
         xhr.open("GET", this.props.baseUrl + "movies?status=PUBLISHED");
+        // xhr.open("GET", this.props.baseUrl + "movies");
         xhr.setRequestHeader("Cache-Control", "no-cache");
-        xhr.send(data);
+        // xhr.send(data);
+        xhr.send();
 
         // Get released movies
         let dataReleased = null;
@@ -90,14 +94,16 @@ class Home extends Component {
         xhrReleased.addEventListener("readystatechange", function () {
             if (this.readyState === 4) {
                 that.setState({
-                    releasedMovies: JSON.parse(this.responseText).movies
+                    releasedMovies: JSON.parse(this.response).movies
                 });
             }
         });
 
         xhrReleased.open("GET", this.props.baseUrl + "movies?status=RELEASED");
+        // xhrReleased.open("GET", this.props.baseUrl + "movies");
         xhrReleased.setRequestHeader("Cache-Control", "no-cache");
-        xhrReleased.send(dataReleased);
+        // xhrReleased.send(dataReleased);
+        xhrReleased.send();
 
         // Get filters
         let dataGenres = null;
@@ -105,7 +111,7 @@ class Home extends Component {
         xhrGenres.addEventListener("readystatechange", function () {
             if (this.readyState === 4) {
                 that.setState({
-                    genresList: JSON.parse(this.responseText).genres
+                    genresList: JSON.parse(this.response).genres
                 });
             }
         });
@@ -120,7 +126,7 @@ class Home extends Component {
         xhrArtists.addEventListener("readystatechange", function () {
             if (this.readyState === 4) {
                 that.setState({
-                    artistsList: JSON.parse(this.responseText).artists
+                    artistsList: JSON.parse(this.response).artists
                 });
             }
         });
@@ -179,7 +185,7 @@ class Home extends Component {
         xhrFilter.addEventListener("readystatechange", function () {
             if (this.readyState === 4) {
                 that.setState({
-                    releasedMovies: JSON.parse(this.responseText).movies
+                    releasedMovies: JSON.parse(this.response).movies
                 });
             }
         });
@@ -188,7 +194,7 @@ class Home extends Component {
         xhrFilter.setRequestHeader("Cache-Control", "no-cache");
         xhrFilter.send(dataFilter);
     }
-
+    
     render() {
         const { classes } = this.props;
         return (
